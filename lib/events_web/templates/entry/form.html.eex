@@ -1,0 +1,39 @@
+<!-- NOTE: conn.assigns fields can be aliased with '@' and used directly. -->
+<%= form_for @changeset, @action, fn f -> %>
+
+  <div class="container d-flex flex-column justify-content-center">
+    <div class="row">
+      <div class="col">
+        <div class="input-group mb-3">
+          <%= label f, :name, "Event name", class: "form-label" %>
+          <%= text_input f, :name, class: "form-control" %>
+          <%= error_tag f, :name %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="input-group mb-3">
+          <%= label f, :date, "Date", class: "form-label" %>
+          <!-- Date picker widget here -->
+          <%= error_tag f, :date %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="input-group mb-3">
+          <%= label f, :description, class: "form-label" %>
+          <%= text_input f, :description, class: "form-control" %>
+          <%= error_tag f, :description %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <%= submit "Create", class: "btn btn-primary"%>
+    </div>
+  </div>
+<% end %>

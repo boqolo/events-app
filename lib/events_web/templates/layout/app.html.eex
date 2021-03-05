@@ -9,31 +9,49 @@
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
   <body>
-    <nav class="navbar navbar-expand-md navbar-light">
+    <nav class="navbar navbar-expand-md navbar-light mb-2">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="/">Events</a> 
+          <a class="navbar-brand fs-1" href="/">Events</a> 
         </div>
-        <div class="collapse navbar-collapse">
-          <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-            <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "nav-link" %>
+        <div class="d-flex flex-row-reverse collapse navbar-collapse">
+          <!-- Direct interpretation of Nat Tuck lecture code below 02/23 -->
+          <%= if @conn.assigns[:currentUser] do %>
+            <div class="badge bg-info fs-5 ms-2">Hello, <%= @currentUser.name %></div> <!-- this is checking for our session: the name of the user stored in the conn. Notice here that we -->
+            <%= link("Sign out", 
+                to: Routes.session_path(@conn, :delete), 
+                method: :delete, # Says 'dispatch this action with my Conn struct as an argument in the controller using this kind of HTTP request 
+                class: "btn btn-outline-primary") %> 
+            <%= link "Create", to: Routes.entry_path(@conn, :new), class: "nav-link" %>
+            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+              <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "nav-link" %>
+            <% end %>
+          <% else %>
+            <div>
+              <%= form_for @conn,
+                Routes.session_path(@conn, :create),
+                [class: "form-inline d-flex"], 
+                fn f -> %> <!-- this passes the form as argument 'f' to make available for inside components -->
+                <%= text_input f, :email, class: "form-control" %> <!-- create a text input with the form. pass default name. any other attr are tacked on to the generated html -->
+                <%= submit "Sign in", class: "btn btn-light text-nowrap mx-2" %>
+              <% end %>
+            </div>
           <% end %>
-          <a class="nav-link" href="create">Create</a>
         </div>
       </div>
     </nav>
-    <main role="main" class="container">
-      <% if get_flash(@conn, :info) do %>
+    <div class="container">
+      <%= if get_flash(@conn, :info) do %>
         <p class="alert alert-info" role="alert">
           <%= get_flash(@conn, :info) %>
         </p>
       <% end %>
-      <% if get_flash(@conn, :error) do %>
+      <%= if get_flash(@conn, :error) do %>
         <p class="alert alert-danger" role="alert">
           <%= get_flash(@conn, :error) %>
         </p>
       <% end %>
       <%= @inner_content %>
-    </main>
+    </div>
   </body>
 </html>

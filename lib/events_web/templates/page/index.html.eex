@@ -1,0 +1,10 @@
+<%= if !@conn.assigns[:currentUser] do %> <!-- this syntax does some aliasing for easier use. see below usages -->
+  <div>
+    <%= link "Sign up", to: Routes.user_path(@conn, :new), class: "btn btn-primary" %>
+  </div>
+<% else %>
+  <div>
+    <p><%= "You are signed in as #{@currentUser.name}!" %></p>
+  </div>
+<% end %>
+

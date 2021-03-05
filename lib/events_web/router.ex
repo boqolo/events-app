@@ -7,17 +7,24 @@ defmodule EventsWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug EventsWeb.Plugs.FetchUser
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+  # This block defines al of your app's routes!!! (mix phx.routes shows all)
+  # NOTE must restart server when routes updated
   scope "/", EventsWeb do
     pipe_through :browser
 
     get "/", PageController, :index
     resources "/users", UserController
+    resources "/entries", EntryController
+    resources "/session", SessionController, # generates Routes.session_path based on controller name 
+      only: [:create, :delete], # Since we only ever want to create and delete on sessions
+      singleton: true # basically means lone resource not needing id
   end
 
   # Other scopes may use custom stacks.

@@ -22,7 +22,7 @@ defmodule Events.Users do
   end
 
   @doc """
-  Gets a single user.
+  Gets a single user by id.
 
   Raises `Ecto.NoResultsError` if the User does not exist.
 
@@ -36,6 +36,21 @@ defmodule Events.Users do
 
   """
   def get_user!(id), do: Repo.get!(User, id)
+
+  @doc """
+  Gets a single user by id. Returns nil if not found.
+  """
+  def get_user(id), do: Repo.get(User, id)
+
+  @doc """
+  Gets a single user by name. Returns nil if User does not exist.
+  """
+  def getUserByName(name), do: Repo.get_by(User, name: name)
+
+  @doc """
+  Gets a single user by email address. Returns nil if User does not exist.
+  """
+  def getUserByEmail(email), do: Repo.get_by(User, email: email)
 
   @doc """
   Creates a user.
