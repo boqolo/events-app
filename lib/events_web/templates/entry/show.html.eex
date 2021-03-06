@@ -14,10 +14,6 @@
 </h1>
 
 <div class="rounded bg-light p-3 fs-5">
-  <div>
-    <strong>Host:</strong>
-    <%= @entry.description %>
-  </div>
   <div class="text-wrap">
     <strong>Description:</strong>
     <%= @entry.description %>
