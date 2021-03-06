@@ -27,7 +27,11 @@ Yes, it is.
 6. If you would like the deployment for an old homework to be reconsidered, what
 are the links to your Inkfish submission and deployed site?
 
-# TODO
+I had a minor bug with scores calculation for the 'cows' which I have now fixed.
+
+original submission: https://inkfish.ntuck-neu.site/subs/4643
+site: hw03.measuringworm.com
+Repo: https://github.com/boqolo/4digits
 
 And here's a list of tasks for grading comments. Just leave this here:
  - Development
