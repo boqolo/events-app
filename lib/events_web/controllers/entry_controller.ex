@@ -17,15 +17,30 @@ defmodule EventsWeb.EntryController do
   end
 
   def create(conn, %{"entry" => entry_params}) do
-    case Entries.create_entry(entry_params) do
+    formattedParams = 
+      entry_params
+      |> Map.put("date", convertToDateTime(entry_params["date"]))
+      |> Map.put("user_id", conn.assigns[:currentUser].id)
+
+    Logger.debug("Entry controller ---> " <> inspect(formattedParams))
+
+    case Entries.create_entry(formattedParams) do
       {:ok, entry} ->
         conn
-        |> put_flash(:info, "Entry created successfully.")
+        |> put_flash(:info, "Event created successfully.")
         |> redirect(to: Routes.entry_path(conn, :show, entry))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "new.html", changeset: changeset)
     end
+  end
+
+  defp convertToDateTime(dateStr) do
+    dateStr
+    |> String.replace(", ", "T")
+    |> (fn(s) -> s <> ":00" <> "Z" end).()
+    |> DateTime.from_iso8601()
+    |> elem(1)
   end
 
   def show(conn, %{"id" => id}) do

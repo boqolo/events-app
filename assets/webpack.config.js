@@ -33,7 +33,7 @@ module.exports = (env, options) => {
           use: {
             loader: 'babel-loader'
           }
-        },
+        }, 
         {
           test: /\.[s]?css$/,
           use: [

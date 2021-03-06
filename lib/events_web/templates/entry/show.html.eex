@@ -1,23 +1,26 @@
-<h1>Show Entry</h1>
+<span>
+  <%= link "Back", 
+    to: Routes.entry_path(@conn, :index),
+    class: "btn btn-secondary" %>
+</span>
+<span>
+  <%= link "Edit",
+    to: Routes.entry_path(@conn, :edit, @entry),
+    class: "btn btn-outline-primary"  %>
+</span>
 
-<ul>
+<h1 class="fw-lighter my-3">
+  <%= @entry.name %>
+</h1>
 
-  <li>
-    <strong>Name:</strong>
-    <%= @entry.name %>
-  </li>
-
-  <li>
+<div class="rounded bg-light p-3 fs-5">
+  <div>
+    <strong>Host:</strong>
+    <%= @entry.description %>
+  </div>
+  <div class="text-wrap">
     <strong>Description:</strong>
     <%= @entry.description %>
-  </li>
+  </div>
+</div>
 
-  <li>
-    <strong>Invitees:</strong>
-    <%= @entry.invitees %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.entry_path(@conn, :edit, @entry) %></span>
-<span><%= link "Back", to: Routes.entry_path(@conn, :index) %></span>

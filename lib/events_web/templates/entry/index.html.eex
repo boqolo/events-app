@@ -1,30 +1,52 @@
-<h1>Listing Entries</h1>
+<div class="container">
+  <div class="row my-3">
+    <div class="col">
+      <span>
+        <%= link "Add an event", 
+          to: Routes.entry_path(@conn, :new),
+          class: "btn btn-success fs-4" %>
+      </span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <span class="fs-3 fw-lighter">Name</span>
+    </div>
+    <div class="col">
+      <span class="fs-3 fw-lighter">Details</span>
+    </div>
+    <div class="col">
+    </div>
+  </div>
+    <%= for entry <- @entries do %>
+      <div class="row p-3 mb-3 rounded bg-light">
+        <div class="col text-wrap">
+          <%= entry.name %>
+        </div>
+        <div class="col text-wrap">
+          <%= entry.description %>
+        </div>
+        <div class="col text-wrap">
+          <span>
+            <%= link "View", 
+            to: Routes.entry_path(@conn, :show, entry) ,
+            class: "btn btn-primary" %>
+          </span>
+          <span>
+            <%= link "Edit", 
+              to: Routes.entry_path(@conn, :edit, entry),
+              class: "btn btn-outline-primary" %>
+          </span>
+          <span>
+            <%= link "Delete", 
+              to: Routes.entry_path(@conn, :delete, entry), 
+              method: :delete, 
+              data: [confirm: "Are you sure?"],
+              class: "btn btn-outline-danger" %>
+          </span>
+        </div>
+      </div>
+    <% end %>
+</div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Invitees</th>
 
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-<%= for entry <- @entries do %>
-    <tr>
-      <td><%= entry.name %></td>
-      <td><%= entry.description %></td>
-      <td><%= entry.invitees %></td>
-
-      <td>
-        <span><%= link "Show", to: Routes.entry_path(@conn, :show, entry) %></span>
-        <span><%= link "Edit", to: Routes.entry_path(@conn, :edit, entry) %></span>
-        <span><%= link "Delete", to: Routes.entry_path(@conn, :delete, entry), method: :delete, data: [confirm: "Are you sure?"] %></span>
-      </td>
-    </tr>
-<% end %>
-  </tbody>
-</table>
-
-<span><%= link "New Entry", to: Routes.entry_path(@conn, :new) %></span>

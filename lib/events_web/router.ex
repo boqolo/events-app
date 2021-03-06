@@ -22,6 +22,8 @@ defmodule EventsWeb.Router do
     get "/", PageController, :index
     resources "/users", UserController
     resources "/entries", EntryController
+    resources "/invitations", InvitationController
+    resources "/comments", CommentController
     resources "/session", SessionController, # generates Routes.session_path based on controller name 
       only: [:create, :delete], # Since we only ever want to create and delete on sessions
       singleton: true # basically means lone resource not needing id

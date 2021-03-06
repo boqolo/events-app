@@ -12,6 +12,9 @@ defmodule Events.Users.User do
     # will autogenerate id field of type integer
     field :name, :string, null: false
     field :email, :string, null: false
+
+    has_many :entries, Events.Entries.Entry
+
     timestamps() # this is a macro that auto adds 'inserted_at' and updated_at' fields
   end
 

@@ -1,6 +1,9 @@
-<h1>Create an Event</h1>
 <!-- Here we are bringing together template pieces to render. We are also setting an 
-      action to the conn.assigns that the rendered template can use, in this case a form. -->
+  action to the conn.assigns that the rendered template can use, in this case a form. -->
+<span class="my-3">
+  <%= link "Back", 
+    to: Routes.entry_path(@conn, :index),
+    class: "btn btn-secondary" %>
+</span>
+<h1 class="my-3 fw-lighter">Create an Event</h1>
 <%= render "form.html", Map.put(assigns, :action, Routes.entry_path(@conn, :create)) %>
-
-<span><%= link "Back", to: Routes.entry_path(@conn, :index) %></span>

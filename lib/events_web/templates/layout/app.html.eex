@@ -17,11 +17,12 @@
         <div class="d-flex flex-row-reverse collapse navbar-collapse">
           <!-- Direct interpretation of Nat Tuck lecture code below 02/23 -->
           <%= if @conn.assigns[:currentUser] do %>
-            <div class="badge bg-info fs-5 ms-2">Hello, <%= @currentUser.name %></div> <!-- this is checking for our session: the name of the user stored in the conn. Notice here that we -->
+            <div class="badge bg-info fs-4 ms-2"><%= "Hello, #{@currentUser.name}" %></div> <!-- this is checking for our session: the name of the user stored in the conn. Notice here that we -->
             <%= link("Sign out", 
                 to: Routes.session_path(@conn, :delete), 
                 method: :delete, # Says 'dispatch this action with my Conn struct as an argument in the controller using this kind of HTTP request 
                 class: "btn btn-outline-primary") %> 
+            <%= link "View Events", to: Routes.entry_path(@conn, :index), class: "nav-link" %>
             <%= link "Create", to: Routes.entry_path(@conn, :new), class: "nav-link" %>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "nav-link" %>
@@ -32,7 +33,7 @@
                 Routes.session_path(@conn, :create),
                 [class: "form-inline d-flex"], 
                 fn f -> %> <!-- this passes the form as argument 'f' to make available for inside components -->
-                <%= text_input f, :email, class: "form-control" %> <!-- create a text input with the form. pass default name. any other attr are tacked on to the generated html -->
+                <%= text_input f, :email, class: "form-control", placeholder: "Enter your email" %> <!-- create a text input with the form. pass default name. any other attr are tacked on to the generated html -->
                 <%= submit "Sign in", class: "btn btn-light text-nowrap mx-2" %>
               <% end %>
             </div>

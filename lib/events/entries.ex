@@ -8,6 +8,8 @@ defmodule Events.Entries do
 
   alias Events.Entries.Entry
 
+  # TODO need a function that decorates an entry with numbers of responses
+
   @doc """
   Returns the list of entries.
 

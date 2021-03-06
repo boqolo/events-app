@@ -3,10 +3,10 @@ defmodule Events.Repo.Migrations.CreateEntries do
 
   def change do
     create table(:entries) do
-      add :name, :string
-      add :description, :string
+      add :name, :string, null: false
+      add :description, :text, null: false, default: ""
       add :date, :utc_datetime
-      add :invitees, {:array, :string}
+      add :user_id, references(:users), null: false # event entries belong to users
 
       timestamps()
     end
