@@ -18,7 +18,9 @@ events.measuringworm.com
 
 4. Is your app functionality complete? If not, what's missing?
 
-Yes, it is.
+Yes, mostly. My timezone adjustment seems not to be fully functional,
+so for now it is displaying in UTC but apart from that it seems
+to follow the spec.
 
 5. Is your app properly deployed? If not, what went wrong?
 
