@@ -18,7 +18,7 @@ defmodule EventsWeb.InvitationController do
     case Invitations.create_invitation(invitation_params) do
       {:ok, invitation} ->
         conn
-        |> put_flash(:info, "Invitation created successfully.")
+        |> put_flash(:info, "Invitation created successfully")
         |> redirect(to: Routes.invitation_path(conn, :show, invitation))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -43,7 +43,7 @@ defmodule EventsWeb.InvitationController do
     case Invitations.update_invitation(invitation, invitation_params) do
       {:ok, invitation} ->
         conn
-        |> put_flash(:info, "Invitation updated successfully.")
+        |> put_flash(:info, "Invitation updated successfully")
         |> redirect(to: Routes.invitation_path(conn, :show, invitation))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -56,7 +56,7 @@ defmodule EventsWeb.InvitationController do
     {:ok, _invitation} = Invitations.delete_invitation(invitation)
 
     conn
-    |> put_flash(:info, "Invitation deleted successfully.")
+    |> put_flash(:info, "Invitation deleted successfully")
     |> redirect(to: Routes.invitation_path(conn, :index))
   end
 end

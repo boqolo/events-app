@@ -29,7 +29,7 @@ defmodule EventsWeb.EntryController do
     case Entries.create_entry(formattedParams) do
       {:ok, entry} ->
         conn
-        |> put_flash(:info, "Event created successfully.")
+        |> put_flash(:info, "Event created successfully")
         |> redirect(to: Routes.entry_path(conn, :show, entry))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -72,7 +72,7 @@ defmodule EventsWeb.EntryController do
     case Entries.update_entry(entry, entry_params) do
       {:ok, entry} ->
         conn
-        |> put_flash(:info, "Entry updated successfully.")
+        |> put_flash(:info, "Entry updated successfully")
         |> redirect(to: Routes.entry_path(conn, :show, entry))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -85,7 +85,7 @@ defmodule EventsWeb.EntryController do
     {:ok, _entry} = Entries.delete_entry(entry)
 
     conn
-    |> put_flash(:info, "Entry deleted successfully.")
+    |> put_flash(:info, "Entry deleted successfully")
     |> redirect(to: Routes.entry_path(conn, :index))
   end
 end

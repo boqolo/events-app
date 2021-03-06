@@ -18,7 +18,7 @@ defmodule EventsWeb.CommentController do
     case Comments.create_comment(comment_params) do
       {:ok, comment} ->
         conn
-        |> put_flash(:info, "Comment created successfully.")
+        |> put_flash(:info, "Comment posted successfully")
         |> redirect(to: Routes.comment_path(conn, :show, comment))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -43,7 +43,7 @@ defmodule EventsWeb.CommentController do
     case Comments.update_comment(comment, comment_params) do
       {:ok, comment} ->
         conn
-        |> put_flash(:info, "Comment updated successfully.")
+        |> put_flash(:info, "Comment updated successfully")
         |> redirect(to: Routes.comment_path(conn, :show, comment))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -56,7 +56,7 @@ defmodule EventsWeb.CommentController do
     {:ok, _comment} = Comments.delete_comment(comment)
 
     conn
-    |> put_flash(:info, "Comment deleted successfully.")
+    |> put_flash(:info, "Comment deleted successfully")
     |> redirect(to: Routes.comment_path(conn, :index))
   end
 end
