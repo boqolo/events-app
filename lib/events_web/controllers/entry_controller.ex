@@ -5,6 +5,8 @@ defmodule EventsWeb.EntryController do
   alias Events.Entries
   alias Events.Entries.Entry
 
+  alias EventsWeb.Util.Formatting
+
   def index(conn, _params) do
     entries = Entries.list_entries()
     render(conn, "index.html", entries: entries)
@@ -31,18 +33,26 @@ defmodule EventsWeb.EntryController do
         |> redirect(to: Routes.entry_path(conn, :show, entry))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        conn
+        |> put_flash(:error, Formatting.humanizeChangesetErrors(changeset))
+        |> render("new.html", changeset: changeset)
     end
   end
 
   defp convertToDateTime(dateStr) do
-    dateStr
-    |> String.replace(", ", "T")
-    |> (fn(s) -> s <> ":00" <> "Z" end).()
-    |> DateTime.from_iso8601()
-    |> elem(1)
-    |> DateTime.shift_zone("America/Chicago") # central is my TZ
-    |> elem(1)
+    formattedDateStr = 
+      dateStr
+      |> String.replace(", ", "T")
+      |> (fn(s) -> "#{s}:00Z" end).() # correct ISO format
+
+    case DateTime.from_iso8601(formattedDateStr) do
+      {:ok, dateTime, _} -> 
+        case DateTime.shift_zone(dateTime, "America/Chicago") do
+          {:ok, shiftedDateTime} -> shiftedDateTime
+          _ -> dateStr
+        end
+      _ -> dateStr
+    end
   end
 
   def show(conn, %{"id" => id}) do

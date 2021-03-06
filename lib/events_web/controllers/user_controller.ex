@@ -13,6 +13,8 @@ defmodule EventsWeb.UserController do
   alias Events.Users
   alias Events.Users.User
 
+  alias EventsWeb.Util.Formatting
+
   def index(conn, _params) do
     users = Users.list_users()
     render(conn, "index.html", users: users)
@@ -31,16 +33,8 @@ defmodule EventsWeb.UserController do
         |> redirect(to: Routes.user_path(conn, :show, user))
 
       {:error, changeset} ->
-        # Source: Ecto docs at https://hexdocs.pm/ecto/getting-started.html
-        messages = Ecto.Changeset.traverse_errors(changeset, fn {msg, opts} ->
-          Enum.reduce(opts, msg, fn {key, value}, acc ->
-            String.replace(acc, "%{#{key}}", to_string(value))
-          end)
-        end)
-        Logger.debug(changeset)
-        errorMsg = Enum.join(List.flatten(Map.values(messages)), "; ")
         conn
-        |> put_flash(:error, errorMsg)
+        |> put_flash(:error, Formatting.humanizeChangesetErrors(changeset))
         |> render("new.html", changeset: changeset)
     end
   end

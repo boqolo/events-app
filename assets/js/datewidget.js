@@ -1,14 +1,15 @@
 import datepicker from "js-datepicker";
-import "./dtsel";
+import { dtsel } from "./dtsel";
 
-
-instance = new dtsel.DTS('input[id="pick-date"]',  {
-    direction: 'BOTTOM',
-    dateFormat: "yyyy-mm-dd",
-    showTime: true,
-    timeFormat: "HH:MM",
-    cancelBlur: 10
-});
+try { // only when needed
+  const instance = new dtsel.DTS('input[id="pick-date"]',  {
+      direction: 'BOTTOM',
+      dateFormat: "yyyy-mm-dd",
+      showTime: true,
+      timeFormat: "HH:MM",
+      cancelBlur: 10
+  });
+} catch(err) {}
 
 // const opts = { 
 //   showAllDates: true,
