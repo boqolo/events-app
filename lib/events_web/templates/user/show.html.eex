@@ -8,7 +8,7 @@
       to: Routes.user_path(@conn, :index),
       class: "btn btn-secondary" %>
   </span>
-  <%= if @currentUser.id == @user.id do %>
+  <%= if @conn.assigns[:currentUser] && @currentUser.id == @user.id do %>
     <span>
       <%= link "Edit",
         to: Routes.user_path(@conn, :edit, @user),
