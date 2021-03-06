@@ -9,7 +9,7 @@
   <div class="mb-3">
     <%= label f, :date, "Date", class: "form-label" %>
     <!-- Date picker widget here -->
-    <%= text_input f, :date, id: "pick-date", type: "text", class: "form-control" %>
+    <%= text_input f, :date, id: "pick-date", type: "text", class: "form-control", readonly: "" %>
     <%= error_tag f, :date %>
   </div>
 
