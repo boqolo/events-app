@@ -4,6 +4,7 @@ defmodule EventsWeb.SessionController do
   # Here we need actions that dispatch based on requests (typically func name atoms)
   
   # If this is called, someone wants to set a `current_user` cookie for a session
+  # Source: Nat Tuck lecture code
   def create(conn, %{"email" => email} = _params) do
     user = Events.Users.getUserByEmail(email)
     if user do
