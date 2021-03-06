@@ -41,6 +41,8 @@ defmodule EventsWeb.EntryController do
     |> (fn(s) -> s <> ":00" <> "Z" end).()
     |> DateTime.from_iso8601()
     |> elem(1)
+    |> DateTime.shift_zone("America/Chicago") # central is my TZ
+    |> elem(1)
   end
 
   def show(conn, %{"id" => id}) do

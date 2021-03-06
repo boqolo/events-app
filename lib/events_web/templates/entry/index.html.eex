@@ -15,6 +15,9 @@
     <div class="col">
       <span class="fs-3 fw-lighter">Details</span>
     </div>
+    <div class="col col-sm-2">
+      <span class="fs-3 fw-lighter">When</span>
+    </div>
     <div class="col">
     </div>
   </div>
@@ -25,6 +28,9 @@
         </div>
         <div class="col text-wrap">
           <%= entry.description %>
+        </div>
+        <div class="col col-sm-2 text-wrap">
+          <%= String.slice(DateTime.to_string(entry.date), 0..-5) %>
         </div>
         <div class="col text-wrap">
           <span>
