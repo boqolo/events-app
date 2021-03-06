@@ -24,9 +24,9 @@
                 class: "btn btn-outline-primary") %> 
             <%= link "View Events", to: Routes.entry_path(@conn, :index), class: "nav-link" %>
             <%= link "Create", to: Routes.entry_path(@conn, :new), class: "nav-link" %>
-            <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
+            <!-- <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
               <%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home), class: "nav-link" %>
-            <% end %>
+            <% end %> -->
           <% else %>
             <div>
               <%= form_for @conn,

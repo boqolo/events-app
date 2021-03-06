@@ -8,11 +8,13 @@
       to: Routes.user_path(@conn, :index),
       class: "btn btn-secondary" %>
   </span>
-  <span>
-    <%= link "Edit",
-      to: Routes.user_path(@conn, :edit, @user),
-      class: "btn btn-outline-primary"  %>
-  </span>
+  <%= if @currentUser.id == @user.id do %>
+    <span>
+      <%= link "Edit",
+        to: Routes.user_path(@conn, :edit, @user),
+        class: "btn btn-outline-primary"  %>
+    </span>
+  <% end %>
 </div>
 
 <div class="rounded bg-light p-3 fs-5">
