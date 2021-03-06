@@ -1,5 +1,10 @@
-<h1>New User</h1>
+<h1 class="my-3 fw-lighter">Sign Up</h1>
+
+<span class="my-3">
+  <%= link "Back", 
+    to: Routes.page_path(@conn, :index),
+    class: "btn btn-secondary" %>
+</span>
 
 <%= render "form.html", Map.put(assigns, :action, Routes.user_path(@conn, :create)) %>
 
-<span><%= link "Back", to: Routes.user_path(@conn, :index) %></span>

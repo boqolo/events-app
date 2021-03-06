@@ -1,12 +1,18 @@
 <%= if !@conn.assigns[:currentUser] do %> <!-- this syntax does some aliasing for easier use. see below usages -->
-  <div class="p-4">
+  <div class="col">
+    <p class="fs-2">Your all-new, favorite event planner!</p>
+    <p>Plan events and invite your fri3nds with this cool app. Your friends are sure to be amazed not only by your party, but your excellent planning skills.</p>
+  </div>
+  <div class="col">
     <%= link "Sign up", 
       to: Routes.user_path(@conn, :new),
       class: "btn btn-primary fs-3" %>
   </div>
 <% else %>
   <div>
-    <p><%= "You are signed in as #{@currentUser.name}!" %></p>
+    <span>Check out all the cool 
+      <%= link "events", to: Routes.entry_path(@conn, :index) %> happening!
+    </span>
   </div>
 <% end %>
 

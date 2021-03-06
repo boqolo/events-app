@@ -14,7 +14,7 @@ defmodule EventsWeb.SessionController do
     else
       conn
       |> delete_session(:userID) # may as well try delete even if not exist so that next attempt is clean
-      |> put_flash(:error, "Sign in failed. Try another email address or Sign-up")
+      |> put_flash(:error, "Sign in failed. Try another email address or sign up")
       |> redirect(to: Routes.page_path(conn, :index))
     end
   end

@@ -1,18 +1,27 @@
-<h1>Show User</h1>
+<h1 class="fw-lighter my-3">
+  <%= "#{@user.name}\'s account" %>
+</h1>
 
-<ul>
+<div class="my-3">
+  <span>
+    <%= link "Back", 
+      to: Routes.user_path(@conn, :index),
+      class: "btn btn-secondary" %>
+  </span>
+  <span>
+    <%= link "Edit",
+      to: Routes.user_path(@conn, :edit, @user),
+      class: "btn btn-outline-primary"  %>
+  </span>
+</div>
 
-  <li>
+<div class="rounded bg-light p-3 fs-5">
+  <div>
     <strong>Name:</strong>
     <%= @user.name %>
-  </li>
-
-  <li>
+  </div>
+  <div class="text-wrap">
     <strong>Email:</strong>
     <%= @user.email %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.user_path(@conn, :edit, @user) %></span>
-<span><%= link "Back", to: Routes.user_path(@conn, :index) %></span>
+  </div>
+</div>

@@ -1,26 +1,25 @@
 <!-- NOTE: conn.assigns fields can be aliased with '@' and used directly. -->
 <%= form_for @changeset, @action, fn f -> %>
+  <div class="mb-3">
+    <%= label f, :name, "Event name", class: "form-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
 
-    <div class="mb-3">
-      <%= label f, :name, "Event name", class: "form-label" %>
-      <%= text_input f, :name, class: "form-control" %>
-      <%= error_tag f, :name %>
-    </div>
+  <div class="mb-3">
+    <%= label f, :date, "Date", class: "form-label" %>
+    <!-- Date picker widget here -->
+    <%= text_input f, :date, id: "pick-date", type: "text", class: "form-control" %>
+    <%= error_tag f, :date %>
+  </div>
 
-    <div class="mb-3">
-      <%= label f, :date, "Date", class: "form-label" %>
-      <!-- Date picker widget here -->
-      <%= text_input f, :date, id: "pick-date", type: "text", class: "form-control" %>
-      <%= error_tag f, :date %>
-    </div>
+  <div class="mb-3">
+    <%= label f, :description, class: "form-label" %>
+    <%= text_input f, :description, class: "form-control" %>
+    <%= error_tag f, :description %>
+  </div>
 
-    <div class="mb-3">
-      <%= label f, :description, class: "form-label" %>
-      <%= text_input f, :description, class: "form-control" %>
-      <%= error_tag f, :description %>
-    </div>
-
-    <span class="my-3">
-      <%= submit "Create", class: "btn btn-primary"%>
-    </span>
+  <span class="my-3">
+    <%= submit "Create", class: "btn btn-primary"%>
+  </span>
 <% end %>
