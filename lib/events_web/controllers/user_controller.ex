@@ -13,7 +13,7 @@ defmodule EventsWeb.UserController do
   alias Events.Users
   alias Events.Users.User
 
-  alias EventsWeb.Util.Formatting
+  alias EventsWeb.{SessionController, Util.Formatting}
 
   def index(conn, _params) do
     users = Users.list_users()
@@ -29,8 +29,9 @@ defmodule EventsWeb.UserController do
     case Users.create_user(user_params) do
       {:ok, user} ->
         conn
-        |> put_flash(:info, "User created successfully")
-        |> redirect(to: Routes.user_path(conn, :show, user))
+        |> put_flash(:account, "Account created successfully")
+        |> SessionController.create(%{"email" => user.email})
+        # |> redirect(to: Routes.user_path(conn, :show, user))
 
       {:error, changeset} ->
         conn

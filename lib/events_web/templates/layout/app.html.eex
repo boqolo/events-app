@@ -42,6 +42,11 @@
       </div>
     </nav>
     <div class="container">
+      <%= if get_flash(@conn, :account) do %>
+        <p class="alert alert-success" role="alert">
+          <%= get_flash(@conn, :account) %>
+        </p>
+      <% end %>
       <%= if get_flash(@conn, :info) do %>
         <p class="alert alert-info" role="alert">
           <%= get_flash(@conn, :info) %>

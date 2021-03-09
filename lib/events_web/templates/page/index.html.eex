@@ -1,7 +1,7 @@
 <%= if !@conn.assigns[:currentUser] do %> <!-- this syntax does some aliasing for easier use. see below usages -->
   <div class="col">
     <p class="fs-2">Your all-new, favorite event planner!</p>
-    <p>Plan events and invite your fri3nds with this cool app. Your friends are sure to be amazed not only by your party, but your excellent planning skills.</p>
+    <p>Plan events and invite your fri3nds with this cool app. Your friends are sure to be amazed not only by your event, but your excellent planning skills.</p>
   </div>
   <div class="col">
     <%= link "Sign up", 
