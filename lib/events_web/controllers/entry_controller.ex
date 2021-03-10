@@ -56,12 +56,12 @@ defmodule EventsWeb.EntryController do
   end
 
   def show(conn, %{"id" => id}) do
-    entry = Entries.get_entry!(id)
+    entry = Entries.get_and_load_entry!(id)
     render(conn, "show.html", entry: entry)
   end
 
   def edit(conn, %{"id" => id}) do
-    entry = Entries.get_entry!(id)
+    entry = Entries.get_and_load_entry!(id)
     changeset = Entries.change_entry(entry)
     render(conn, "edit.html", entry: entry, changeset: changeset)
   end

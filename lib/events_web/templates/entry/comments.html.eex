@@ -1,0 +1,15 @@
+<%= for comment <- @comments do %>
+  <div class="card my-3">
+    <div class="card-body">
+      <h5 class="card-title">
+        <%= comment.user.name %>
+      </h5>
+      <h6 class="card-subtitle text-muted mb-2">
+        <%= EventsWeb.Util.Formatting.convertNaiveDateTime!(comment.updated_at) %>
+      </h6>
+      <p class="card-text">
+        <%= comment.body %>
+      </p>
+    </div>
+  </div>
+<% end %>

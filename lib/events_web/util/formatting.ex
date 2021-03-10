@@ -1,5 +1,7 @@
 defmodule EventsWeb.Util.Formatting do
 
+  require Logger
+
   def humanizeChangesetErrors(changeset) do
     # Source: Ecto docs at https://hexdocs.pm/ecto/getting-started.html
     errors = 
@@ -20,6 +22,20 @@ defmodule EventsWeb.Util.Formatting do
     
     messages
     |> Enum.join(". ")
+  end
+
+  def convertUTCDateTime!(dateTime) do
+    {:ok, centralDateTime} = DateTime.shift_zone!(dateTime, "America/Chicago")
+    centralDateTime
+  end
+
+  def convertNaiveDateTime!(naiveDateTime) do
+    DateTime.from_naive!(naiveDateTime, "America/Chicago")
+  end
+
+  def formatDateTime(dateTime) do 
+    # TODO format output
+    dateTime
   end
 
 end

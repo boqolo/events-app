@@ -37,6 +37,8 @@ defmodule Events.Comments do
   """
   def get_comment!(id), do: Repo.get!(Comment, id)
 
+  def load_comment(comment), do: comment |> Repo.preload([:user])
+
   @doc """
   Creates a comment.
 

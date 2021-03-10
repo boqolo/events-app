@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
     <script defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </head>
-  <body>
+  <body class="d-flex flex-column min-vh-100">
     <nav class="navbar navbar-expand-md navbar-light mb-2">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -59,5 +59,10 @@
       <% end %>
       <%= @inner_content %>
     </div>
+      <footer class="mt-auto py-4 bg-light rounded">
+        <div class="container">
+          <span class="text-muted">Footer here</span>
+        </div>
+      </footer>
   </body>
 </html>

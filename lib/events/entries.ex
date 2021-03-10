@@ -7,6 +7,8 @@ defmodule Events.Entries do
   alias Events.Repo
 
   alias Events.Entries.Entry
+  alias Events.Comments
+  alias Events.Comments.Comment
 
   # TODO need a function that decorates an entry with numbers of responses
 
@@ -38,6 +40,25 @@ defmodule Events.Entries do
 
   """
   def get_entry!(id), do: Repo.get!(Entry, id)
+
+  def get_and_load_entry!(id) do 
+    get_entry!(id) 
+      # source: https://hexdocs.pm/ecto/Ecto.Repo.html#c:preload/3
+      |> Repo.preload([
+        :user, 
+        :invitations,
+        comments: from(c in Comment, order_by: [desc: c.updated_at])
+      ])
+      |> load_entry_comments()
+  end
+
+  def load_entry_comments(entry) do
+    loadedComments = Enum.map(
+      entry.comments, 
+      fn comm -> Comments.load_comment(comm) end
+    )
+    %{entry | comments: loadedComments}
+  end
 
   @doc """
   Creates a entry.

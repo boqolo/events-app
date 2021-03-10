@@ -1,0 +1,30 @@
+<span>
+  <%= link "Back to events", 
+    to: Routes.entry_path(@conn, :index),
+    class: "btn btn-outline-secondary" %>
+</span>
+<%= if assigns[:currentUser] && @entry.user_id == @currentUser.id do %>
+  <span>
+    <%= link "Edit",
+      to: Routes.entry_path(@conn, :edit, @entry),
+      class: "btn btn-outline-primary" %>
+  </span>
+<% end %>
+
+<h1 class="fw-lighter my-3">
+  <%= @entry.name %>
+</h1>
+
+<div class="rounded bg-light p-3 fs-5">
+  <div class="text-wrap">
+    <strong>When:</strong>
+    <%= String.replace(String.slice(DateTime.to_string(@entry.date), 0..-5),
+      " ",
+      " at ") <> " " <> @entry.date.time_zone
+    %>
+  </div>
+  <div class="text-wrap">
+    <strong>Description:</strong>
+    <%= @entry.description %>
+  </div>
+</div>

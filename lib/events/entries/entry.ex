@@ -13,6 +13,7 @@ defmodule Events.Entries.Entry do
 
     belongs_to :user, Events.Users.User
     has_many :invitations, Events.Invitations.Invitation 
+    has_many :comments, Events.Comments.Comment 
 
     timestamps()
   end
@@ -20,7 +21,13 @@ defmodule Events.Entries.Entry do
   @doc false
   def changeset(entry, attrs) do
     entry
-    |> cast(attrs, [:name, :date, :description, :user_id])
+    |> cast(attrs, [
+      :name, 
+      :date, 
+      :description, 
+      :user_id, 
+      :user, 
+    ])
     |> validate_required([:name, :date, :description, :user_id])
   end
 end

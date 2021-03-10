@@ -1,29 +1,7 @@
-<span>
-  <%= link "Back", 
-    to: Routes.entry_path(@conn, :index),
-    class: "btn btn-secondary" %>
-</span>
-<span>
-  <%= link "Edit",
-    to: Routes.entry_path(@conn, :edit, @entry),
-    class: "btn btn-outline-primary"  %>
-</span>
-
-<h1 class="fw-lighter my-3">
-  <%= @entry.name %>
-</h1>
-
-<div class="rounded bg-light p-3 fs-5">
-  <div class="text-wrap">
-    <strong>Description:</strong>
-    <%= @entry.description %>
-  </div>
-  <div class="text-wrap">
-    <strong>When:</strong>
-    <%= String.replace(String.slice(DateTime.to_string(@entry.date), 0..-5),
-      " ",
-      " at ") <> " " <> @entry.date.time_zone
-    %>
-  </div>
+<%= render "details.html", conn: @conn, entry: @entry %>
+<div class="my-3">
+  <%= link "Add comment",
+    to: Routes.entry_comment_path(@conn, :new, @entry.id),
+    class: "btn btn-success fs-5" %>
 </div>
-
+<%= render "comments.html", conn: @conn, comments: @entry.comments %>
