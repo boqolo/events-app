@@ -26,7 +26,6 @@ defmodule Events.Entries.Entry do
       :date, 
       :description, 
       :user_id, 
-      :user, 
     ])
     |> validate_required([:name, :date, :description, :user_id])
   end

@@ -15,7 +15,7 @@
   <%= @entry.name %>
 </h1>
 
-<div class="rounded bg-light p-3 fs-5">
+<div class="rounded bg-light p-3 fs-4">
   <div class="text-wrap">
     <strong>When:</strong>
     <%= String.replace(String.slice(DateTime.to_string(@entry.date), 0..-5),
@@ -24,7 +24,7 @@
     %>
   </div>
   <div class="text-wrap">
-    <strong>Description:</strong>
+    <strong>What:</strong>
     <%= @entry.description %>
   </div>
 </div>

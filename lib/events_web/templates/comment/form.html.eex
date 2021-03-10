@@ -1,7 +1,7 @@
 <%= form_for @changeset, @action, fn f -> %>
 
   <div class="mb-3">
-    <%= label f, "Add a comment", class: "form-label" %>
+    <%= label f, "Post a comment", class: "form-label" %>
     <%= text_input f, :body, class: "form-control w-50" %>
     <%= error_tag f, :body %>
   </div>

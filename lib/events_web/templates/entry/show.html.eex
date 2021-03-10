@@ -1,6 +1,6 @@
 <%= render "details.html", conn: @conn, entry: @entry %>
 <div class="my-3">
-  <%= link "Add comment",
+  <%= link "Post comment",
     to: Routes.entry_comment_path(@conn, :new, @entry.id),
     class: "btn btn-success fs-5" %>
 </div>
