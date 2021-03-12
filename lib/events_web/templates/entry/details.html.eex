@@ -17,6 +17,12 @@
 
 <div class="rounded bg-light p-3 fs-4">
   <div class="text-wrap">
+    <strong>Who:</strong>
+    <%= link @entry.user.name, 
+      to: Routes.user_path(@conn, :show, @entry.user.id),
+      class: "nounderline" %>
+  </div>
+  <div class="text-wrap">
     <strong>When:</strong>
     <%= String.replace(String.slice(DateTime.to_string(@entry.date), 0..-5),
       " ",

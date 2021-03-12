@@ -1,23 +1,13 @@
 <%= form_for @changeset, @action, fn f -> %>
-  <%= if @changeset.action do %>
-    <div class="alert alert-danger">
-      <p>Oops, something went wrong! Please check the errors below.</p>
-    </div>
-  <% end %>
-
-  <%= label f, :event_id %>
-  <%= number_input f, :event_id %>
-  <%= error_tag f, :event_id %>
-
-  <%= label f, :user_id %>
-  <%= number_input f, :user_id %>
-  <%= error_tag f, :user_id %>
-
-  <%= label f, :response %>
-  <%= number_input f, :response %>
-  <%= error_tag f, :response %>
-
-  <div>
-    <%= submit "Save" %>
+  <div class="mb-3">
+  <%= submit "Accept",
+    to: Routes.entry_invitation_path(@conn, :update, @entry.id, @invitation.id),
+    class: "btn-lg btn-success mx-1" %>
+  <%= submit "Decline",
+    to: Routes.entry_invitation_path(@conn, :update, @entry.id, @invitation.id),
+    class: "btn-lg btn-danger mx-1" %>
+  <%= submit "Maybe",
+    to: Routes.entry_invitation_path(@conn, :update, @entry.id, @invitation.id),
+    class: "btn-lg btn-secondary mx-1 textlight" %>
   </div>
 <% end %>

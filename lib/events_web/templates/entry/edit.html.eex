@@ -1,6 +1,6 @@
 <span class="my-3">
-  <%= link "Back", 
-    to: Routes.entry_path(@conn, :index),
+  <%= link "Cancel", 
+    to: Routes.entry_path(@conn, :show, @entry.id),
     class: "btn btn-secondary" %>
 </span>
 <h1 class="my-3 fw-lighter">Edit Event</h1>

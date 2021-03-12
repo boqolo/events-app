@@ -24,11 +24,13 @@ defmodule EventsWeb.Router do
     resources "/entries", EntryController do
       resources "/comments", CommentController,
         only: [:new, :create, :delete, :update]
+      resources "/invitations", InvitationController
     end
-    resources "/invitations", InvitationController
     resources "/session", SessionController, # generates Routes.session_path based on controller name 
       only: [:create, :delete], # Since we only ever want to create and delete on sessions
       singleton: true # basically means lone resource not needing id
+    # FIXME config 404 path
+    # get "/*path", PageController, :fourOfour
   end
 
   # Other scopes may use custom stacks.

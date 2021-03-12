@@ -4,6 +4,7 @@ defmodule Events.Users do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Query, only: [from: 2]
   alias Events.Repo
 
   alias Events.Users.User
@@ -19,6 +20,11 @@ defmodule Events.Users do
   """
   def list_users do
     Repo.all(User)
+  end
+
+  def listRealUsers() do
+    query = from(u in User, where: u.name != ^"---") # ignore unclaimed accounts
+    Repo.all(query)
   end
 
   @doc """

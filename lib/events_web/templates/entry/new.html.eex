@@ -1,7 +1,7 @@
 <!-- Here we are bringing together template pieces to render. We are also setting an 
   action to the conn.assigns that the rendered template can use, in this case a form. -->
 <span class="my-3">
-  <%= link "Back", 
+  <%= link "Cancel", 
     to: Routes.entry_path(@conn, :index),
     class: "btn btn-secondary" %>
 </span>

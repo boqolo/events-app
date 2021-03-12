@@ -1,6 +1,10 @@
 defmodule EventsWeb.CommentController do
   use EventsWeb, :controller
 
+  # Only for users
+  plug EventsWeb.Plugs.RequireUser
+  plug EventsWeb.Plugs.EntryExists
+
   require Logger
 
   alias Events.Comments

@@ -20,6 +20,6 @@
   </div>
 
   <span class="my-3">
-    <%= submit "Create", class: "btn btn-primary"%>
+    <%= submit "Create", class: "btn-lg btn-primary"%>
   </span>
 <% end %>

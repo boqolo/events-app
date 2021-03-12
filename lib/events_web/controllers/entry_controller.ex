@@ -1,5 +1,9 @@
 defmodule EventsWeb.EntryController do
   use EventsWeb, :controller
+
+  plug EventsWeb.Plugs.RequireUser
+  # FIXME plug EventsWeb.Plugs.EntryExists when action not in [:index, :new]
+
   require Logger
 
   alias Events.Entries

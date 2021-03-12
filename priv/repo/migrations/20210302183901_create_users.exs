@@ -6,7 +6,7 @@ defmodule Events.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
-      add :name, :string, null: false
+      add :name, :string, null: false, default: ""
       add :email, :string, null: false
 
       timestamps()

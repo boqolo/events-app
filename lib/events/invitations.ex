@@ -4,6 +4,7 @@ defmodule Events.Invitations do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Query, only: [from: 2]
   alias Events.Repo
 
   alias Events.Invitations.Invitation
@@ -87,6 +88,20 @@ defmodule Events.Invitations do
   """
   def delete_invitation(%Invitation{} = invitation) do
     Repo.delete(invitation)
+  end
+
+  def userInvited?(email, entry_id) do
+    query = from(i in Invitation, where: i.email == ^email and i.entry_id == ^entry_id)
+    Repo.exists?(query)
+  end
+
+  def getInvitationByEmail(email, entry_id) do
+    Repo.get_by(Invitation, [email: email, entry_id: entry_id])
+  end
+
+  def getInvitationIdByEmail(email, entry_id) do
+    query = from(i in Invitation, where: i.email == ^email and i.entry_id == ^entry_id, select: i.id)
+    Repo.all(query)
   end
 
   @doc """

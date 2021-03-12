@@ -4,6 +4,7 @@ defmodule Events.Entries do
   """
 
   import Ecto.Query, warn: false
+  import Ecto.Query, only: [from: 2]
   alias Events.Repo
 
   alias Events.Entries.Entry
@@ -41,6 +42,8 @@ defmodule Events.Entries do
   """
   def get_entry!(id), do: Repo.get!(Entry, id)
 
+  def get_entry(id), do: Repo.get(Entry, id)
+
   def get_and_load_entry!(id) do 
     get_entry!(id) 
       # source: https://hexdocs.pm/ecto/Ecto.Repo.html#c:preload/3
@@ -58,6 +61,12 @@ defmodule Events.Entries do
       fn comm -> Comments.load_comment(comm) end
     )
     %{entry | comments: loadedComments}
+  end
+
+  def entryExists?(id) do
+    # source: https://stackoverflow.com/questions/50697411/ecto-repo-to-check-if-id-exists-in-the-database-phoenix-framework
+    query = from(e in Entry, where: e.id == ^id)
+    Repo.exists?(query)
   end
 
   @doc """
@@ -94,6 +103,20 @@ defmodule Events.Entries do
     entry
     |> Entry.changeset(attrs)
     |> Repo.update()
+  end
+
+  def getEntryInvitationStats(entry) do
+    Enum.reduce(
+      entry.invitations,
+      %{accepted: 0, declined: 0, none: 0},
+      fn(invit, acc) -> 
+        case invit.response do
+          1 -> %{acc | accepted: acc.accepted + 1}
+          -1 -> %{acc | declined: acc.declined + 1}
+          _ -> %{acc | none: acc.none + 1}
+        end
+      end
+    )
   end
 
   @doc """

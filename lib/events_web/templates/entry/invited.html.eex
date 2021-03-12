@@ -1,0 +1,5 @@
+<div class="d-flex flex-row">
+  <%= for invite <- @invitations do %>
+    <span class="badge rounded-pill bg-light fs-5 text-dark mx-1"><%= invite.email %></span>
+  <% end %>
+</div>

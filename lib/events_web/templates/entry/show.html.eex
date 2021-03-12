@@ -1,7 +1,30 @@
 <%= render "details.html", conn: @conn, entry: @entry %>
-<div class="my-3">
-  <%= link "Post comment",
-    to: Routes.entry_comment_path(@conn, :new, @entry.id),
-    class: "btn btn-success fs-5" %>
+<div class="my-3 row row-cols-auto">
+  <%= if @currentUser.id == @entry.user.id do %>
+    <div class="col">
+      <%= link "Edit event",
+        to: Routes.entry_path(@conn, :edit, @entry.id),
+        class: "btn btn-warning fs-5" %>
+    </div>
+    <div class="col">
+      <%= link "Invite",
+        to: Routes.entry_invitation_path(@conn, :new, @entry.id),
+        class: "btn btn-primary fs-5" %>
+    </div>
+    <div class="col">
+      <%= link "View Invitations",
+        to: Routes.entry_invitation_path(@conn, :index, @entry.id),
+        class: "btn btn-info text-light fs-5" %>
+    </div>
+  <% end %>
+  <div class="col">
+    <%= link "Post comment",
+      to: Routes.entry_comment_path(@conn, :new, @entry.id),
+      class: "btn btn-success fs-5" %>
+  </div>
 </div>
+<h4 class="my-3 fs-4">
+  Invited:
+</h4>
+<%= render "invited.html", conn: @conn, invitations: @entry.invitations %>
 <%= render "comments.html", conn: @conn, comments: @entry.comments %>

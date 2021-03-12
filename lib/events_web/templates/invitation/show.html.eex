@@ -1,23 +1,9 @@
-<h1>Show Invitation</h1>
-
-<ul>
-
-  <li>
-    <strong>Event:</strong>
-    <%= @invitation.event_id %>
-  </li>
-
-  <li>
-    <strong>User:</strong>
-    <%= @invitation.user_id %>
-  </li>
-
-  <li>
-    <strong>Response:</strong>
-    <%= @invitation.response %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: Routes.invitation_path(@conn, :edit, @invitation) %></span>
-<span><%= link "Back", to: Routes.invitation_path(@conn, :index) %></span>
+<div class="position-absolute top-50 start-50 translate-middle">
+  <h3 class="display-4 mb-2"><%= @entry.name %></h3>
+  <h3 class="display-6 mb-4">You've been invited!</h3>
+  <%= render "form.html", 
+    Map.put(
+      assigns, 
+      :action, 
+      Routes.entry_invitation_path(@conn, :update, @entry.id, @invitation.id)) %>
+</div>
