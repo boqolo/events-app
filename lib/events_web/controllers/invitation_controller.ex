@@ -123,7 +123,7 @@ defmodule EventsWeb.InvitationController do
           ), 
           else: conn
         end).()
-      |> redirect(to: Routes.entry_path(conn, :show, entry_id))
+      |> redirect(to: Routes.entry_invitation_path(conn, :index, entry_id))
     else
       conn
       |> (fn(conn) -> 

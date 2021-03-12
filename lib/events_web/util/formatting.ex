@@ -2,6 +2,10 @@ defmodule EventsWeb.Util.Formatting do
 
   require Logger
 
+  def makeURL(conn, localPath) do
+    "http://#{conn.host}/#{localPath}"
+  end
+
   def humanizeChangesetErrors(changeset) do
     # Source: Ecto docs at https://hexdocs.pm/ecto/getting-started.html
     errors = 

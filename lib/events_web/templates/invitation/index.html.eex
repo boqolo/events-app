@@ -9,7 +9,17 @@
 <div class="rounded bg-light lead p-3 fs-4 w-auto">
   <%= "Accepted: #{@stats.accepted} | Declined: #{@stats.declined} | Maybe: #{@stats.none}" %>
 </div>
-<table class="table table-striped">
+<div class="rounded my-4 w-100">
+  <div class="text-success fw-lighter fs-3">
+    Send this link to invited users so they can respond:
+  </div>
+  <h3 class="">
+    <small class="display-6 text-muted">
+      <%= "http://#{@conn.host}#{Routes.entry_invitation_path(@conn, :index, @entry.id)}" %>
+    </small>
+  </h3>
+</div>
+<table class="table table-striped fs-5">
   <thead>
     <tr>
       <th scope="col">Email</th>
@@ -18,7 +28,9 @@
     <tbody>
       <%= for invitation <- @invitations do %>
         <tr>
-          <th scope="row"><%= invitation.email %></th>
+          <td scope="row">
+            <%= invitation.email %>
+          </td>
           <td>
             <%= if invitation.response == 1, 
               do: "Accepted", 
