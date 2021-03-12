@@ -1,0 +1,25 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <div class="mb-3">
+    <%= radio_button f, :response, "1",
+      class: "btn-check",
+      autocomplete: "off" %>
+      <%= label f, :response, "Accept",
+        class: "btn-lg btn-outline-success",
+        for: "invitation_response_1" %>
+    <%= radio_button f, :response, "-1",
+      class: "btn-check",
+      autocomplete: "off" %>
+      <%= label f, :response, "Decline",
+        class: "btn-lg btn-outline-danger",
+        for: "invitation_response__1" %>
+    <%= radio_button f, :response, "0",
+      class: "btn-check",
+      autocomplete: "off" %>
+      <%= label f, :response, "Maybe",
+        class: "btn-lg btn-outline-secondary",
+        for: "invitation_response_0" %>
+  </div>
+  <%= submit "Submit", 
+    method: :patch,
+    class: "btn-lg btn-primary" %>
+<% end %>

@@ -61,7 +61,7 @@
     </div>
       <footer class="mt-auto py-4 bg-light rounded">
         <div class="container">
-          <span class="text-muted">Footer here</span>
+          <span class="text-muted">events @ measuringworm</span>
         </div>
       </footer>
   </body>

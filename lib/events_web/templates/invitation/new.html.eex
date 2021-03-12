@@ -1,6 +1,6 @@
 <%= render EventsWeb.EntryView, "details.html", conn: @conn, entry: @entry %>
 <div class="my-3 p-3 rounded bg-light border border-secondary">
-  <%= render "form.html", 
+  <%= render "invite_form.html", 
     Map.put(assigns, :action, Routes.entry_invitation_path(@conn, :create, @entry.id)) %>
 </div>
 

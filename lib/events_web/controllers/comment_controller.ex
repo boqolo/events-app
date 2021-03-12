@@ -25,7 +25,7 @@ defmodule EventsWeb.CommentController do
     case Comments.create_comment(preparedParams) do
       {:ok, _comment} ->
         conn
-        |> put_flash(:info, "Comment posted successfully")
+        |> put_flash(:success, "Comment posted successfully")
         |> redirect(to: Routes.entry_path(conn, :show, entry_id))
 
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -55,12 +55,12 @@ defmodule EventsWeb.CommentController do
     end
   end
 
-  def delete(conn, %{"id" => id}) do
+  def delete(conn, %{"entry_id" => entry_id, "id" => id}) do
     comment = Comments.get_comment!(id)
     {:ok, _comment} = Comments.delete_comment(comment)
 
     conn
     |> put_flash(:info, "Comment deleted successfully")
-    # |> redirect(to: Routes.comment_path(conn, :index))
+    |> redirect(to: Routes.entry_path(conn, :show, entry_id))
   end
 end

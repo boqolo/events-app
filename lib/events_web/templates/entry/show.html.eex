@@ -27,4 +27,4 @@
   Invited:
 </h4>
 <%= render "invited.html", conn: @conn, invitations: @entry.invitations %>
-<%= render "comments.html", conn: @conn, comments: @entry.comments %>
+<%= render "comments.html", conn: @conn, owner_id: @entry.user_id, comments: @entry.comments %>

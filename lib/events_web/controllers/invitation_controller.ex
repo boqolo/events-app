@@ -2,7 +2,7 @@ defmodule EventsWeb.InvitationController do
   use EventsWeb, :controller
 
   # Gotta love plugs ;)
-  plug EventsWeb.Plugs.UserInvite when action not in [:show]
+  plug EventsWeb.Plugs.UserInvite when action not in [:show, :update]
   plug EventsWeb.Plugs.RequireUser
   # FIXME plug EventsWeb.Plugs.EntryExists
 
@@ -149,9 +149,11 @@ defmodule EventsWeb.InvitationController do
   end
 
   def show(conn, %{"entry_id" => entry_id, "id" => id}) do
+    Logger.debug("INVIT CONTOLLER SHOW ---> entry: #{entry_id} invit_id: #{id}")
     entry = Entries.get_and_load_entry!(entry_id)
     invitation = Invitations.get_invitation!(id)
-    render(conn, "show.html", entry: entry, invitation: invitation)
+    changeset = Invitations.change_invitation(invitation)
+    render(conn, "show.html", entry: entry, invitation: invitation, changeset: changeset)
   end
 
   def edit(conn, %{"id" => id}) do
@@ -160,18 +162,25 @@ defmodule EventsWeb.InvitationController do
     render(conn, "edit.html", invitation: invitation, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "invitation" => params}) do
+  def update(conn, %{"entry_id" => entry_id, "id" => invit_id} = params) do
+    %{"invitation" => %{"response" => resp}} = params
     Logger.debug("INVIT CONTOLLER UPDATE ---> #{inspect(params)}")
-    invitation = Invitations.get_invitation!(id)
+    unless Enum.member?(["1", "-1", "0"], resp) do
+      conn
+      |> put_flash(:error, "That response couldn't be recognized")
+    else
+      invitation = Invitations.get_invitation!(invit_id)
+      attrs = %{"response" => String.to_integer(resp)}
 
-    case Invitations.update_invitation(invitation, params) do
-      {:ok, invitation} ->
-        conn
-        |> put_flash(:info, "Invitation updated successfully")
-        |> redirect(to: Routes.invitation_path(conn, :show, invitation))
-
-      {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "edit.html", invitation: invitation, changeset: changeset)
+      case Invitations.update_invitation(invitation, attrs) do
+        {:ok, _} ->
+          conn
+          |> put_flash(:info, "Your response has been recorded")
+          |> redirect(to: Routes.entry_path(conn, :show, entry_id))
+        {:error, %Ecto.Changeset{} = _changeset} ->
+          conn
+          |> put_flash(:error, "Your response couldn't be recorded")
+      end
     end
   end
 

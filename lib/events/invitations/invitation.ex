@@ -18,5 +18,6 @@ defmodule Events.Invitations.Invitation do
     |> cast(attrs, [:entry_id, :user_id, :response, :email])
     |> validate_required([:entry_id, :email])
     |> foreign_key_constraint(:user_id)
+    |> foreign_key_constraint(:response)
   end
 end

@@ -1,0 +1,11 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <div class="mb-3">
+    <%= label f, "Enter email addresses separated by commas", 
+      class: "form-label" %>
+    <%= text_input f, :emails, class: "form-control w-50" %>
+  </div>
+  <%= submit "Invite", class: "btn btn-outline-success" %>
+  <%= link "Cancel", 
+    to: Routes.entry_path(@conn, :show, @entry.id), 
+    class: "btn btn-outline-danger" %>
+<% end %>

@@ -33,7 +33,7 @@ defmodule EventsWeb.EntryController do
     case Entries.create_entry(formattedParams) do
       {:ok, entry} ->
         conn
-        |> put_flash(:info, "Event created successfully")
+        |> put_flash(:success, "Event created successfully")
         |> redirect(to: Routes.entry_path(conn, :show, entry))
 
       {:error, %Ecto.Changeset{} = changeset} ->
