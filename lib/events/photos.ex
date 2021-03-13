@@ -25,7 +25,7 @@ defmodule Events.Photos do
     metadata =
       unless metadata? do
         File.mkdir_p!(basePath(hash))
-        Map.merge(%{name: filename, refs: 0}, getSomeStats(filename))
+        Map.merge(%{"name" => filename, "refs" => 0}, getSomeStats(filename))
       else
         metadata?
       end
