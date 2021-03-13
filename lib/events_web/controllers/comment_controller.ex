@@ -18,10 +18,11 @@ defmodule EventsWeb.CommentController do
   end
 
   def create(conn, %{"comment" => body, "entry_id" => entry_id}) do
-    preparedParams = 
+    preparedParams =
       body
       |> Map.put("entry_id", entry_id)
       |> Map.put("user_id", conn.assigns[:currentUser].id)
+
     case Comments.create_comment(preparedParams) do
       {:ok, _comment} ->
         conn
@@ -48,7 +49,6 @@ defmodule EventsWeb.CommentController do
       {:ok, _comment} ->
         conn
         |> put_flash(:info, "Comment updated successfully")
-        # |> redirect(to: Routes.comment_path(conn, :show, comment))
 
       {:error, %Ecto.Changeset{} = changeset} ->
         render(conn, "edit.html", comment: comment, changeset: changeset)

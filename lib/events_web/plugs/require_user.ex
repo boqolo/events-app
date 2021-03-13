@@ -1,6 +1,6 @@
 defmodule EventsWeb.Plugs.RequireUser do
   # this is needed for the flash and redirect functions
-  use EventsWeb, :controller 
+  use EventsWeb, :controller
   import Plug.Conn
 
   def init(opts), do: opts
@@ -16,4 +16,3 @@ defmodule EventsWeb.Plugs.RequireUser do
     end
   end
 end
-

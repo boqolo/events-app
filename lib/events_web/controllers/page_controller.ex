@@ -6,9 +6,10 @@ defmodule EventsWeb.PageController do
   end
 
   def fourOfour(conn, _params) do
-    conn = 
+    conn =
       conn
       |> put_flash(:error, "That page couldn't be found. Check the url")
+
     render(conn, "index.html")
   end
 end

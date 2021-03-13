@@ -23,7 +23,8 @@ defmodule Events.Users do
   end
 
   def listRealUsers() do
-    query = from(u in User, where: u.name != ^"---") # ignore unclaimed accounts
+    # ignore unclaimed accounts
+    query = from(u in User, where: u.name != ^"---")
     Repo.all(query)
   end
 

@@ -96,11 +96,13 @@ defmodule Events.Invitations do
   end
 
   def getInvitationByEmail(email, entry_id) do
-    Repo.get_by(Invitation, [email: email, entry_id: entry_id])
+    Repo.get_by(Invitation, email: email, entry_id: entry_id)
   end
 
   def getInvitationIdByEmail(email, entry_id) do
-    query = from(i in Invitation, where: i.email == ^email and i.entry_id == ^entry_id, select: i.id)
+    query =
+      from(i in Invitation, where: i.email == ^email and i.entry_id == ^entry_id, select: i.id)
+
     Repo.all(query)
   end
 

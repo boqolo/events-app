@@ -50,8 +50,6 @@ defmodule EventsWeb.UserController do
         |> put_flash(:success, "Account created successfully")
         |> SessionController.create(%{"email" => user.email})
 
-      # |> redirect(to: Routes.user_path(conn, :show, user))
-
       {:error, changeset} ->
         conn
         |> put_flash(:error, Formatting.humanizeChangesetErrors(changeset))
@@ -61,18 +59,20 @@ defmodule EventsWeb.UserController do
 
   # Since actions dispatch on when matched to a path at the route
   # *as long as you declare the route in the router*
-  def photo(conn, %{"id" => id}) do
+  def photo(conn, %{"id" => _id}) do
     hash = conn.assigns[:currentUser].photo_hash
     Logger.debug("USER CONTRROLLER PHOTO ---> #{inspect(hash)}")
+
     unless Enum.member?(["", "default"], hash) do
       {:ok, _metadata, data} = Photos.retrievePhoto(hash)
-      conn # we can just retrieve the photo and send back down the wire
+      # we can just retrieve the photo and send back down the wire
+      conn
       |> put_resp_content_type("image/jpeg")
       |> send_resp(200, data)
     else
-      # TODO send back default photo
       {:ok, data} = Photos.retrieveDefaultPhoto()
-      conn 
+
+      conn
       |> put_resp_content_type("image/jpeg")
       |> send_resp(200, data)
     end

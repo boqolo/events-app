@@ -1,5 +1,6 @@
 defmodule EventsWeb.Plugs.FetchUser do
-  import Plug.Conn  # don't need to prefix functions
+  # don't need to prefix functions
+  import Plug.Conn
   require Logger
 
   # A Plug module encapsulates some functionality to do on
@@ -16,15 +17,16 @@ defmodule EventsWeb.Plugs.FetchUser do
     # this is a clever way of denoting there is no session but
     # alowing the line after it not to fail. Querying for id -1
     # will always be nil
-    userID = get_session(conn, :userID) || -1 
+    userID = get_session(conn, :userID) || -1
     Logger.debug("Plug: session --> " <> inspect(userID))
-    user = Events.Users.get_user(userID) # returns a User struct
+    # returns a User struct
+    user = Events.Users.get_user(userID)
     Logger.debug("Plug: user ---> " <> inspect(user))
+
     if user do
       assign(conn, :currentUser, user)
     else
       assign(conn, :currentUser, nil)
     end
   end
-
 end

@@ -11,8 +11,6 @@ defmodule Events.Entries do
   alias Events.Comments
   alias Events.Comments.Comment
 
-  # TODO need a function that decorates an entry with numbers of responses
-
   @doc """
   Returns the list of entries.
 
@@ -44,27 +42,28 @@ defmodule Events.Entries do
 
   def get_entry(id), do: Repo.get(Entry, id)
 
-  def get_and_load_entry!(id) do 
-    get_entry!(id) 
-      # source: https://hexdocs.pm/ecto/Ecto.Repo.html#c:preload/3
-      |> Repo.preload([
-        :user, 
-        :invitations,
-        comments: from(c in Comment, order_by: [desc: c.updated_at])
-      ])
-      |> load_entry_comments()
+  def get_and_load_entry!(id) do
+    get_entry!(id)
+    # source: https://hexdocs.pm/ecto/Ecto.Repo.html#c:preload/3
+    |> Repo.preload([
+      :user,
+      :invitations,
+      comments: from(c in Comment, order_by: [desc: c.updated_at])
+    ])
+    |> load_entry_comments()
   end
 
   def load_entry_comments(entry) do
-    loadedComments = Enum.map(
-      entry.comments, 
-      fn comm -> Comments.load_comment(comm) end
-    )
+    loadedComments =
+      Enum.map(
+        entry.comments,
+        fn comm -> Comments.load_comment(comm) end
+      )
+
     %{entry | comments: loadedComments}
   end
 
   def entryExists?(id) do
-    # source: https://stackoverflow.com/questions/50697411/ecto-repo-to-check-if-id-exists-in-the-database-phoenix-framework
     query = from(e in Entry, where: e.id == ^id)
     Repo.exists?(query)
   end
@@ -109,7 +108,7 @@ defmodule Events.Entries do
     Enum.reduce(
       entry.invitations,
       %{accepted: 0, declined: 0, none: 0},
-      fn(invit, acc) -> 
+      fn invit, acc ->
         case invit.response do
           1 -> %{acc | accepted: acc.accepted + 1}
           -1 -> %{acc | declined: acc.declined + 1}

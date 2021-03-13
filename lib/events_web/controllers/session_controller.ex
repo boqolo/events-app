@@ -19,6 +19,7 @@ defmodule EventsWeb.SessionController do
 
       # if already invited, redirect, else show user
       Logger.debug("SESSION CONTROLELR alreadyInvited ---?> #{inspect(get_session(conn))}")
+
       with %{entry_id: entry_id} <- Map.get(get_session(conn), "alreadyInvited") do
         conn
         |> delete_session("alreadyInvited")
