@@ -1,5 +1,12 @@
 <div class="d-flex flex-row flex-wrap">
   <%= for invite <- @invitations do %>
-    <span class="badge rounded-pill bg-light fs-5 text-dark m-1"><%= invite.email %></span>
+    <%= if @conn.assigns[:currentUser].id == invite.user_id do %>
+      <%= link "You",
+        to: Routes.entry_invitation_path(@conn, :show, invite.entry_id, invite.id),
+        class: "badge bg-info rounded-pill fs-3 m-1" 
+      %>
+    <% else %>
+      <span class="badge rounded-pill bg-light fs-5 text-dark m-1"><%= invite.email %></span>
+    <% end %>
   <% end %>
 </div>

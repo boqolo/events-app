@@ -1,7 +1,6 @@
 defmodule EventsWeb.InvitationController do
   use EventsWeb, :controller
 
-  # Gotta love plugs ;)
   plug EventsWeb.Plugs.UserInvite when action not in [:show, :update]
   plug EventsWeb.Plugs.RequireUser
   # FIXME plug EventsWeb.Plugs.EntryExists

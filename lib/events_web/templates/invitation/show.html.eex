@@ -1,5 +1,5 @@
 <div class="position-absolute top-50 start-50 translate-middle">
-  <h3 class="display-4 mb-2"><%= @entry.name %></h3>
+  <%= render EventsWeb.EntryView, "details.html", conn: @conn, entry: @entry %>
   <h3 class="display-6 mb-4">You've been invited!</h3>
   <%= render "resp_form.html", 
     Map.put(

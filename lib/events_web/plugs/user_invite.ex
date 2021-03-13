@@ -10,8 +10,9 @@ defmodule EventsWeb.Plugs.UserInvite do
   def init(opts), do: opts
 
   def call(conn, _params) do
-    Logger.debug("INVITE PLUG ---> #{inspect(conn.private)}")
-    entry_id = String.to_integer(conn.params["entry_id"])
+    Logger.debug("INVITE PLUG ---> #{inspect(conn.params)}")
+    entry_id = conn.params["entry_id"] || conn.params["id"]
+      |> String.to_integer()
 
 
     unless Entries.entryExists?(entry_id) do
