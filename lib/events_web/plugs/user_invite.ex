@@ -41,10 +41,13 @@ defmodule EventsWeb.Plugs.UserInvite do
 
   defp handleUnregisteredUser(conn, entry_id) do
     Logger.debug("HANDLE UNREGUSTERED GOT")
+    Logger.debug("#{inspect(conn.assigns)} UNREGUSTERED GOT")
     conn
-    |> put_flash(:info, "Sign up to accept this invitation")
-    |> assign(:alreadyInvited, %{entry_id: entry_id})
+    |> put_flash(:info, "Sign in or sign up to accept this invitation")
+    |> put_session(:alreadyInvited, %{entry_id: entry_id})
+    # |> assign(:alreadyInvited, %{entry_id: entry_id})
     |> redirect(to: Routes.user_path(conn, :new))
+    |> halt()
   end
 
   defp handleInvited(conn, email, entry_id) do
@@ -69,6 +72,7 @@ defmodule EventsWeb.Plugs.UserInvite do
     conn 
     |> put_flash(:error, "You weren't invited to that event")
     |> redirect(to: Routes.entry_path(conn, :index))
+    |> halt()
   end
 
 end

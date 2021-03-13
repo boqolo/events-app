@@ -25,6 +25,7 @@ defmodule EventsWeb.UserController do
   end
 
   def new(conn, _params) do
+    Logger.debug("USER NEW ASSIGNS ---> #{inspect(conn.assigns)}")
     changeset = Users.change_user(%User{})
     render(conn, "new.html", changeset: changeset)
   end

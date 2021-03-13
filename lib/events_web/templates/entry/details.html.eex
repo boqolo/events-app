@@ -17,6 +17,12 @@
 
 <div class="rounded bg-light p-3 fs-4">
   <div class="text-wrap">
+    <div class="col w-100">
+      <%= img_tag Routes.user_path(@conn, :photo, @entry.user.id), 
+        alt: @entry.user.name,
+        class: "img-thumbnail img-fluid",
+        style: "width: 5%" %>
+    </div>
     <strong>Who:</strong>
     <%= link @entry.user.name, 
       to: Routes.user_path(@conn, :show, @entry.user.id),

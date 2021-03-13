@@ -1,9 +1,17 @@
 <%= for comment <- @comments do %>
   <div class="card my-3">
     <div class="card-body">
-      <h5 class="card-title">
-        <%= comment.user.name %>
-      </h5>
+      <div class="card-title">
+        <div>
+          <%= img_tag Routes.user_path(@conn, :photo, comment.user.id), 
+            alt: comment.user.name,
+            class: "img-thumbnail img-fluid",
+            style: "width: 5%" %>
+        </div>
+        <h5>
+          <%= comment.user.name %>
+        </h5>
+      </div>
       <h6 class="card-subtitle text-muted mb-2">
         <%= EventsWeb.Util.Formatting.convertNaiveDateTime!(comment.updated_at) %>
       </h6>
