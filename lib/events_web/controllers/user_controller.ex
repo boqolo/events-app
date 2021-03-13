@@ -13,6 +13,7 @@ defmodule EventsWeb.UserController do
   # which template to serve. View modules correspond to controller naming
   # (i.e. EventsWeb.UserController -> EventsWeb.UserView)
 
+  alias Events.Photos
   alias Events.Users
   alias Events.Users.User
 
@@ -29,17 +30,50 @@ defmodule EventsWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
+    upload = user_params["photo"]
+
+    user_params =
+      if upload do
+        {:ok, hash} = Photos.savePhoto(upload.filename, upload.path)
+
+        user_params
+        |> Map.put("photo_hash", hash)
+      else
+        user_params
+        |> Map.put("photo_hash", "default")
+      end
+
     case Users.create_user(user_params) do
       {:ok, user} ->
         conn
         |> put_flash(:success, "Account created successfully")
         |> SessionController.create(%{"email" => user.email})
-        # |> redirect(to: Routes.user_path(conn, :show, user))
+
+      # |> redirect(to: Routes.user_path(conn, :show, user))
 
       {:error, changeset} ->
         conn
         |> put_flash(:error, Formatting.humanizeChangesetErrors(changeset))
         |> render("new.html", changeset: changeset)
+    end
+  end
+
+  # Since actions dispatch on when matched to a path at the route
+  # *as long as you declare the route in the router*
+  def photo(conn, %{"id" => id}) do
+    hash = conn.assigns[:currentUser].photo_hash
+    Logger.debug("USER CONTRROLLER PHOTO ---> #{inspect(hash)}")
+    unless Enum.member?(["", "default"], hash) do
+      {:ok, _metadata, data} = Photos.retrievePhoto(hash)
+      conn # we can just retrieve the photo and send back down the wire
+      |> put_resp_content_type("image/jpeg")
+      |> send_resp(200, data)
+    else
+      # TODO send back default photo
+      {:ok, data} = Photos.retrieveDefaultPhoto()
+      conn 
+      |> put_resp_content_type("image/jpeg")
+      |> send_resp(200, data)
     end
   end
 
@@ -54,8 +88,22 @@ defmodule EventsWeb.UserController do
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 
-  def update(conn, %{"id" => id, "user" => user_params}) do
-    user = Users.get_user!(id)
+  def update(conn, %{"user" => user_params} = params) do
+    Logger.debug("USER CONTROLLER UPDATE ---> #{inspect(params)}")
+    # this is a Plug.Upload Struct
+    upload = user_params["photo"]
+
+    user_params =
+      if upload do
+        {:ok, hash} = Photos.savePhoto(upload.filename, upload.path)
+
+        user_params
+        |> Map.put("photo_hash", hash)
+      else
+        user_params
+      end
+
+    user = Users.get_user!(conn.assigns[:currentUser].id)
 
     case Users.update_user(user, user_params) do
       {:ok, user} ->

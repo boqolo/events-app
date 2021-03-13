@@ -19,6 +19,12 @@
 
 <div class="rounded bg-light p-3 fs-5">
   <div>
+    <%= img_tag Routes.user_path(@conn, :photo, @user), 
+      alt: @user.name,
+      class: "img-thumbnail img-fluid",
+      style: "width: 20%" %>
+  </div>
+  <div>
     <strong>Name:</strong>
     <%= @user.name %>
   </div>

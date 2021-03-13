@@ -16,8 +16,10 @@
         </div>
         <div class="d-flex flex-row-reverse collapse navbar-collapse">
           <!-- Direct interpretation of Nat Tuck lecture code below 02/23 -->
-          <%= if @conn.assigns[:currentUser] do %>
-            <div class="badge bg-info fs-4 ms-2"><%= "Hello, #{@currentUser.name}" %></div> <!-- this is checking for our session: the name of the user stored in the conn. Notice here that we -->
+          <%= if @conn.assigns[:currentUser] do %><!-- this is checking for our session: the name of the user stored in the conn. Notice here that we -->
+            <%= link "#{@currentUser.name}",
+                to: Routes.user_path(@conn, :show, @currentUser.id),
+                class: "badge bg-primary fs-4 ms-2" %> 
             <%= link("Sign out", 
                 to: Routes.session_path(@conn, :delete), 
                 method: :delete, # Says 'dispatch this action with my Conn struct as an argument in the controller using this kind of HTTP request 

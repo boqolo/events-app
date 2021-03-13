@@ -10,9 +10,9 @@
   <%= "Accepted: #{@stats.accepted} | Declined: #{@stats.declined} | Maybe: #{@stats.none}" %>
 </div>
 <div class="rounded my-4 w-100">
-  <div class="text-success fw-lighter fs-3">
+  <h3 class="text-success fs-3">
     Send this link to invited users so they can respond:
-  </div>
+  </h3>
   <h3 class="">
     <small class="display-6 text-muted">
       <%= "http://#{@conn.host}#{Routes.entry_invitation_path(@conn, :index, @entry.id)}" %>

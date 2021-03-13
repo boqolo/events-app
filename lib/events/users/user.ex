@@ -12,6 +12,7 @@ defmodule Events.Users.User do
     # will autogenerate id field of type integer
     field :name, :string, null: false
     field :email, :string, null: false
+    field :photo_hash, :string, null: false
 
     has_many :entries, Events.Entries.Entry
 
@@ -20,7 +21,7 @@ defmodule Events.Users.User do
 
   def changeset(user, params \\ %{}) do
     user
-    |> cast(params, [:name, :email])
+    |> cast(params, [:name, :email, :photo_hash])
     |> validate_required([:name, :email])
     |> validate_length(:name, min: 2, max: 15)
     |> validate_length(:email, min: 6, max: 20)
