@@ -2,6 +2,8 @@ defmodule Events.Photos do
   @root Path.expand("~/.events_uploads/photos")
   @default_photo Path.join(@root, "default/photo.jpg")
 
+  require Logger
+
   # This module is interpolated from Nat Tuck lecture code here:
   # https://github.com/NatTuck/scratch-2021-01/blob/master/4550/0309/photo_blog/lib/photo_blog/photos.ex
 
@@ -23,6 +25,7 @@ defmodule Events.Photos do
     metadata =
       unless metadata? do
         File.mkdir_p!(basePath(hash))
+        Logger.debug("PHOTOS MADE A NEW DIR at ---> #{basePath(hash)}")
         Map.merge(%{name: filename, refs: 0}, getSomeStats(filename))
       else
         metadata?
@@ -45,6 +48,7 @@ defmodule Events.Photos do
     # have dir and all info
     metadata = Map.update!(metadata, :refs, fn count -> count + 1 end)
     # write file to photo loc + write metadata
+    Logger.debug("PHOTOS MADE SAVE at ---> #{dataPath(hash)}")
     File.write!(dataPath(hash), data)
     File.write!(metaPath(hash), Jason.encode!(metadata))
     {:ok, hash}
@@ -82,14 +86,12 @@ defmodule Events.Photos do
   end
 
   def metaPath(hash) do
-    Path.expand(@root)
-    |> Path.join(basePath(hash))
+    basePath(hash)
     |> Path.join("meta.json")
   end
 
   def dataPath(hash) do
-    Path.expand(@root)
-    |> Path.join(basePath(hash))
+    basePath(hash)
     |> Path.join("photo.jpg")
   end
 end

@@ -11,7 +11,7 @@ defmodule EventsWeb.SessionController do
       conn
       |> put_session(:userID, user.id)
       |> put_flash(:info, "Signed in sucessfully")
-      |> redirect(to: Routes.user_path(conn, :index))
+      |> redirect(to: Routes.user_path(conn, :show, user.id))
     else
       conn
       |> delete_session(:userID) # may as well try delete even if not exist so that next attempt is clean
