@@ -15,7 +15,7 @@
   </h3>
   <h3 class="">
     <small class="display-6 text-muted">
-      <%= "http://#{@conn.host}#{Routes.entry_invitation_path(@conn, :index, @entry.id)}" %>
+      <%= "http://events.measuringworm.com#{Routes.entry_invitation_path(@conn, :index, @entry.id)}" %>
     </small>
   </h3>
 </div>
