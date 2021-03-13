@@ -25,7 +25,6 @@ defmodule Events.Photos do
     metadata =
       unless metadata? do
         File.mkdir_p!(basePath(hash))
-        Logger.debug("PHOTOS MADE A NEW DIR at ---> #{basePath(hash)}")
         Map.merge(%{name: filename, refs: 0}, getSomeStats(filename))
       else
         metadata?
@@ -46,9 +45,9 @@ defmodule Events.Photos do
 
   def savePhoto(_filename, hash, data, metadata) do
     # have dir and all info
-    metadata = Map.update!(metadata, :refs, fn count -> count + 1 end)
+    metadata = Map.update!(metadata, "refs", fn count -> count + 1 end)
     # write file to photo loc + write metadata
-    Logger.debug("PHOTOS MADE SAVE at ---> #{dataPath(hash)}")
+    Logger.debug("PHOTOS SAVED AT ---> #{dataPath(hash)}")
     File.write!(dataPath(hash), data)
     File.write!(metaPath(hash), Jason.encode!(metadata))
     {:ok, hash}

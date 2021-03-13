@@ -25,7 +25,6 @@ defmodule EventsWeb.UserController do
   end
 
   def new(conn, _params) do
-    Logger.debug("USER NEW ASSIGNS ---> #{inspect(conn.assigns)}")
     changeset = Users.change_user(%User{})
     render(conn, "new.html", changeset: changeset)
   end
@@ -59,9 +58,9 @@ defmodule EventsWeb.UserController do
 
   # Since actions dispatch on when matched to a path at the route
   # *as long as you declare the route in the router*
-  def photo(conn, %{"id" => _id}) do
-    hash = conn.assigns[:currentUser].photo_hash
-    Logger.debug("USER CONTRROLLER PHOTO ---> #{inspect(hash)}")
+  def photo(conn, %{"id" => id}) do
+    user = Users.get_user!(id)
+    hash = user.photo_hash
 
     unless Enum.member?(["", "default"], hash) do
       {:ok, _metadata, data} = Photos.retrievePhoto(hash)
@@ -89,8 +88,7 @@ defmodule EventsWeb.UserController do
     render(conn, "edit.html", user: user, changeset: changeset)
   end
 
-  def update(conn, %{"user" => user_params} = params) do
-    Logger.debug("USER CONTROLLER UPDATE ---> #{inspect(params)}")
+  def update(conn, %{"user" => user_params}) do
     # this is a Plug.Upload Struct
     upload = user_params["photo"]
 
