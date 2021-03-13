@@ -38,18 +38,20 @@
             to: Routes.entry_path(@conn, :show, entry.id) ,
             class: "btn btn-primary" %>
           </span>
-          <span>
-            <%= link "Edit", 
-              to: Routes.entry_path(@conn, :edit, entry.id),
-              class: "btn btn-outline-primary" %>
-          </span>
-          <span>
-            <%= link "Delete", 
-              to: Routes.entry_path(@conn, :delete, entry.id), 
-              method: :delete, 
-              data: [confirm: "Are you sure?"],
-              class: "btn btn-outline-danger" %>
-          </span>
+          <%= if @conn.assigns[:currentUser].id == entry.user_id do %>
+            <span>
+              <%= link "Edit", 
+                to: Routes.entry_path(@conn, :edit, entry.id),
+                class: "btn btn-outline-primary" %>
+            </span>
+            <span>
+              <%= link "Delete", 
+                to: Routes.entry_path(@conn, :delete, entry.id), 
+                method: :delete, 
+                data: [confirm: "Are you sure?"],
+                class: "btn btn-outline-danger" %>
+            </span>
+          <% end %>
         </div>
       </div>
     <% end %>

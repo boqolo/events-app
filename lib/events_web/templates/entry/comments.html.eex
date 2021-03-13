@@ -11,7 +11,7 @@
         <%= comment.body %>
       </p>
       <%= if comment.user_id == @conn.assigns[:currentUser].id 
-            || @currentUser.id == @owner_id do %>
+            || @conn.assigns[:currentUser].id == @owner_id do %>
         <div class="col-sm-3 text-wrap">
           <span>
             <%= link "Delete", 
