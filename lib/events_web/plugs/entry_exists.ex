@@ -1,6 +1,6 @@
 defmodule EventsWeb.Plugs.EntryExists do
   # this is needed for the flash and redirect functions
-  use EventsWeb, :controller 
+  use EventsWeb, :controller
   import Plug.Conn
 
   require Logger
@@ -8,13 +8,17 @@ defmodule EventsWeb.Plugs.EntryExists do
 
   def init(opts), do: opts
 
-  def call(conn, params) do
-    Logger.debug("ENTRY EXISTS ---> #{inspect(params)}")
-    Logger.debug("ENTRY EXISTS ---> #{inspect(conn)}")
-    entryIdStr = conn.params["entry_id"]
+  def call(conn, _params) do
+    entryIdStr = conn.params["id"] || "-1"
+
+    validId? =
+      String.match?(entryIdStr, ~r/\d+/) && Entries.entryExists?(String.to_integer(entryIdStr))
+
     cond do
-      Entries.entryExists?(String.to_integer(entryIdStr)) -> conn
-      true -> 
+      validId? ->
+        conn
+
+      true ->
         conn
         |> put_flash(:error, "That event couldn't be found")
         |> redirect(to: Routes.entry_path(conn, :index))
@@ -22,4 +26,3 @@ defmodule EventsWeb.Plugs.EntryExists do
     end
   end
 end
-

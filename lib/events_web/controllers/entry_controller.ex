@@ -2,7 +2,7 @@ defmodule EventsWeb.EntryController do
   use EventsWeb, :controller
 
   plug EventsWeb.Plugs.RequireUser
-  # FIXME plug EventsWeb.Plugs.EntryExists when action not in [:index, :new]
+  plug EventsWeb.Plugs.EntryExists when action not in [:index, :new, :create]
 
   require Logger
 
@@ -23,7 +23,7 @@ defmodule EventsWeb.EntryController do
   end
 
   def create(conn, %{"entry" => entry_params}) do
-    formattedParams = 
+    formattedParams =
       entry_params
       |> Map.put("date", convertToDateTime(entry_params["date"]))
       |> Map.put("user_id", conn.assigns[:currentUser].id)
@@ -44,18 +44,21 @@ defmodule EventsWeb.EntryController do
   end
 
   defp convertToDateTime(dateStr) do
-    formattedDateStr = 
+    formattedDateStr =
       dateStr
       |> String.replace(", ", "T")
-      |> (fn(s) -> "#{s}:00Z" end).() # correct ISO format
+      # correct ISO format
+      |> (fn s -> "#{s}:00Z" end).()
 
     case DateTime.from_iso8601(formattedDateStr) do
-      {:ok, dateTime, _} -> 
+      {:ok, dateTime, _} ->
         case DateTime.shift_zone(dateTime, "America/Chicago") do
           {:ok, shiftedDateTime} -> shiftedDateTime
           _ -> dateStr
         end
-      _ -> dateStr
+
+      _ ->
+        dateStr
     end
   end
 
